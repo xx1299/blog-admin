@@ -1,0 +1,179 @@
+/*背景色*/
+body{
+	background-color: whitesmoke;
+}
+/*返回首页a连接样式*/
+#index_programa .container .row .body_left .row .rindex{
+	display: block;
+	color: #666666;
+	font-size: 12px;
+	padding-left: 50px;
+	text-align: right;
+	height: 27px;
+	line-height: 27px;
+}
+/*文章盒子样式*/
+#index_programaBox{
+    margin-top: 10px;
+}
+/*文章卡片样式*/
+/*#index_programa .container .row .body_left .card .view_img{*/
+/*height:125px*/
+/*}*/
+
+/*@media (min-width: 576px) {*/
+/*#index_programa .container .row .body_left .card .view_img{*/
+/*height:125px*/
+/*}*/
+/*}*/
+@media (min-width: 768px) {
+    #index_programa .container .row .body_left .card .view_img{
+        height:100px
+    }
+}
+@media (min-width: 992px) {
+    #index_programa .container .row .body_left .card .view_img{
+        height:115px
+    }
+}
+@media (min-width: 1200px) {
+    #index_programa .container .row .body_left .card .view_img{
+        height:135px
+    }
+}
+#index_programa .container .row .body_left .card .title-a{
+	color: #000000;
+}
+#index_programa .container .row .body_left .card .title-a>h5{
+	margin-bottom: 0;
+}
+#index_programa .container .row .body_left .card .title-a:hover{
+	color: #0B2E13;
+	text-decoration:underline;
+}
+#index_programa .container .row .body_left .card .text-bottom{
+	width: 100%;
+	display: flex;
+	position: absolute;
+	bottom: 10px;
+}
+#index_programa .container .row .body_left .card .detail{
+	background-color: #333;
+	color: white;
+	padding: 10px;
+	letter-spacing:3px;
+	font-size: 12px;
+	display: inline-block;
+}
+#index_programa .container .row .body_left .card .text-bottom>p{
+	background-repeat: no-repeat;
+	font-size: 12px;
+	padding-left: 17px;
+	margin-bottom: 0;
+}
+#index_programa .container .row .body_left .card .card_programa{
+	background-image: url(../img/biaoqian.png);
+}
+#index_programa .container .row .body_left .card .card_time{
+	background-image: url(../img/rili.png);
+	margin-left: 10px;
+}
+#index_programa .container .row .body_left .card .card_nice{
+	background-image: url(../img/dianzan.png);
+	margin-left: 10px;
+}
+#index_programa .container .row .body_left .card .card_nice:hover{
+	background-image: url(../img/dianzan_active.png);
+}
+#index_programa .container .row .body_left .card .card_view{
+	background-image: url(../img/liulan.png);
+	margin-left: 10px;
+}
+#index_programa .pga{
+	font-size: 12px;
+	color: #666666;
+}
+#index_programa .pga:hover{
+	text-decoration:underline;
+}
+/*主体右边样式*/
+#index_programa .container .row .body_right{
+	position: relative;
+}
+#index_programa .container .row .body_right h5{
+	padding-top: 20px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e0e0e0;
+}
+/*右边各个栏目样式*/
+#index_programa .container .row .body_right .linkbox{
+	margin-top: 30px;
+	width: 100%;
+}
+#index_programa .container .row .body_right .linkbox ul{
+	list-style: none;
+	display: flex;
+	justify-content: start;
+	flex-wrap: wrap;
+	padding-left: 0;
+	margin-bottom: 0;
+}
+#index_programa .container .row .body_right .linkbox ul li{
+	width: 32%;
+	padding: 13% 0;
+	margin: 1px;
+	border: 1px solid #E0E0E0;
+	text-align: center;
+	font-size: 14px;
+	background:#CCE5FF ;
+	color: #666666;
+}
+#index_programa .container .row .body_right .linkbox ul li .linkd{
+	display: block;
+	transition:all 1s;
+}
+#index_programa .container .row .body_right .linkbox ul li:hover .linkd{
+	transform: rotate(360deg);
+}
+
+/*友情链接样式*/
+#index_programa .container .row .body_right .blogroll{
+	width: 100%;
+	background-color: white;
+	padding: 10px;
+}
+#index_programa .container .row .body_right .blogroll>span{
+	font-size: 14px;
+}
+#index_programa .container .row .body_right .blogroll>span>a{
+	color: #666666;
+}
+#index_programa .container .row .body_right .blogroll>span>a:hover{
+	color: red;
+}
+/*网站信息样式*/
+#index_programa .container .row .body_right .blogInformation{
+	width: 100%;
+	padding: 10px;
+	background-color: white;
+}
+#index_programa .container .row .body_right .blogInformation>ul{
+	width: 100%;
+	padding-left: 0;
+	margin-bottom: 0;
+}
+#index_programa .container .row .body_right .blogInformation>ul>li{
+	width: 100%;
+	font-size: 14px;
+	color: #666666;
+	display: flex;
+	margin-bottom: 5px;
+}
+#index_programa .container .row .body_right .blogInformation>ul>li>img{
+	margin-right: 5px;
+}
+
+
+
+
+

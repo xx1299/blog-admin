@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xx.bootblog.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.xx.bootblog.domain.Menu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <association property="parent" javaType="Menu" columnPrefix="p_">
+      <id column="id" property="id"/>
+      <result column="text" property="text"/>
+      <result column="url" property="url"/>
+    </association>
+    <collection property="children"
+                column="id"
+                select="getChildren"
+                ofType="Menu"
+                javaType="list">
+    </collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xx.bootblog.domain.Menu">
+    insert into menu (id, text, url, 
+      parentid)
+    values (#{id,jdbcType=INTEGER}, #{text,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{parentid,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xx.bootblog.domain.Menu">
+    update menu
+    set text = #{text,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      parentid = #{parentid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, text, url, parentid
+    from menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select m.id, m.text, m.url, p.id p_id,p.text p_text,p.url p_url
+    from menu m left join menu p
+    on m.parentid = p.id
+  </select>
+  <select id="getChildren" resultMap="BaseResultMap">
+    select id, text, url, parentid
+    from menu
+    where parentid = #{id}
+  </select>
+  <select id="getTree" resultMap="BaseResultMap">
+     select id, text, url, parentid
+    from menu
+    where parentid is null
+  </select>
+</mapper>

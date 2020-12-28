@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>博客后台管理</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/easyui/uimaker/easyui.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/easyui/uimaker/icon.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/release.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/highlight/styles/github.css}">
+</head>
+<body>
+<div style="height: 40px;">
+    <!--<span style="float: left;">标题：</span>-->
+    <label for="title">标题：</label>
+    <input id="title" type="text" name="name" class="easyui-validatebox" data-options="required:true">
+    <!--<input id="title" type="text" style="margin-bottom: 10px;width: 200px;float: left;outline:none;" />-->
+</div>
+<div style="height: 40px;">
+    <span style="float: left;">栏目：</span>
+    <select id="programa" name="programa.pid"></select>
+    <!--<input id="title" type="text" style="margin-bottom: 10px;width: 200px;float: left;outline:none;" />-->
+</div>
+<div style="height: 170px;">
+    <span style="float: left;">预览图：</span>
+    <div class="ylimg">
+        <img id="img"  th:src="@{/img/jiahao.jpg}" style="width: 230px;height: 149px" />
+        <input id="file" type="file" onchange="upload(this)" />
+    </div>
+</div>
+<div style="height: 350px;">
+    <span style="float: left;">内容：</span>
+    <div id="editor" class="text" style="float: left;">
+
+    </div>
+</div>
+<button id="btn1">发布博客</button>
+<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/easyui-lang-zh_CN.js}"></script>
+<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+<script type="text/javascript" th:src="@{/js/wangEditor.min.js}"></script>
+<script type="text/javascript" th:src="@{/highlight/highlight.pack.js}"></script>
+<script type="text/javascript" th:src="@{/js/release.js}"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xx.bootblog.mapper.ArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.xx.bootblog.domain.Article" >
+    <id column="aid" property="aid" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="praise" property="praise" jdbcType="INTEGER" />
+    <result column="pageview" property="pageview" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="releasetime" property="releasetime" jdbcType="TIMESTAMP" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <association property="programa" javaType="Programa">
+      <id column="pid" property="pid"></id>
+      <result column="pname" property="pname"></result>
+    </association>
+    <collection property="reviews"
+                javaType="list"
+                ofType="review"
+                select="com.xx.bootblog.mapper.ReviewMapper.selectByAid"
+                column="aid"/>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from article
+    where aid = #{aid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xx.bootblog.domain.Article" >
+    insert into article (aid, title,  content, releasetime,
+      img, pid)
+    values (#{aid}, #{title},
+    #{content}, #{releasetime},
+      #{img}, #{programa.pid})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xx.bootblog.domain.Article" >
+    update article
+    <set>
+      <if test="title!=null">
+        title = #{title},
+      </if>
+      <if test="praise!=null">
+        praise = #{praise},
+      </if>
+      <if test="pageview!=null">
+        pageview = #{pageview},
+      </if>
+      <if test="content!=null">
+        content = #{content},
+      </if>
+      <if test="releasetime!=null">
+        releasetime = #{releasetime},
+      </if>
+      <if test="img!=null">
+        img = #{img},
+      </if>
+      <if test="programa!=null">
+        pid = #{programa.pid}
+      </if>
+    </set>
+    where aid = #{aid}
+  </update>
+    <update id="updatePraiseByAid">
+      update article
+      set praise = praise+1
+      where aid = #{aid}
+    </update>
+  <update id="updatePageview">
+      update article
+      set pageview = pageview+1
+      where aid = #{aid}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select aid, title, praise, pageview, content, releasetime, img, a.pid, pname
+    from article a,programa p
+    where a.aid = #{aid} and a.pid = p.pid
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select aid, title, praise, pageview, content, releasetime, img, a.pid, pname
+    from article a,programa p
+    where a.pid = p.pid
+  </select>
+  <select id="selectArticleByPid" resultMap="BaseResultMap">
+     select aid, title, praise, pageview, content, releasetime, img, a.pid, pname
+    from article a,programa p
+    where a.pid = p.pid and a.pid = #{pid}
+    order by releasetime desc
+  </select>
+  <select id="getTotal" resultType="java.lang.Long">
+    select count(*)
+    from article
+  </select>
+  <select id="getLastTime" resultType="java.util.Date">
+    select releasetime
+    from article
+    order by releasetime desc
+    limit 0,1
+   </select>
+  <select id="selectArticleByTime" resultMap="BaseResultMap">
+     select aid, title, praise, pageview, content, releasetime, img, a.pid, pname
+    from article a,programa p
+    where a.pid = p.pid
+    order by releasetime desc
+  </select>
+  <select id="getTotalByPid" resultType="java.lang.Long">
+    select count(*)
+    from article
+    where pid = #{pid}
+  </select>
+  <select id="selectPreArticle" resultType="com.xx.bootblog.domain.Article">
+    select title,aid
+    from article
+    where pid = #{pid} and aid &lt; #{aid}
+    LIMIT 1;
+  </select>
+  <select id="selectSufArticle" resultType="com.xx.bootblog.domain.Article">
+    select title,aid
+    from article
+    where pid = #{pid} and aid &gt; #{aid}
+    LIMIT 1;
+  </select>
+  <select id="selectByContent" resultMap="BaseResultMap">
+    select aid,title,content,releasetime,a.pid,pname
+    from article a,programa p
+    where a.pid = p.pid and a.content like concat('%',#{keyWord},'%')
+  </select>
+  <select id="selectByTitle" resultMap="BaseResultMap">
+    select aid,title,content,releasetime,a.pid,pname
+    from article a,programa p
+    where a.pid = p.pid and a.title like concat('%',#{keyWord},'%')
+  </select>
+
+</mapper>

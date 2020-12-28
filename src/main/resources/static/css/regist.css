@@ -1,0 +1,17 @@
+body,html{
+    height: 100%;
+}
+a{
+    color: #5fbeaa;
+}
+.regist_penal{
+    padding-top: 80px;
+    text-align: center;
+}
+.regist_penal>h6{
+    font-size: 14px;
+    color: #797979;
+}
+.regist_penal>h6>a{
+    color: #5d9cec;
+}

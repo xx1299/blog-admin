@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xx.bootblog.mapper.AuthorityMapper">
+    <resultMap id="authorityTree" type="com.xx.bootblog.domain.dto.Authority">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="identifier" jdbcType="VARCHAR" property="identifier" />
+        <collection property="children"
+                    column="id"
+                    select="getAuthoritiesByParentId"
+                    ofType="com.xx.bootblog.domain.dto.Authority"
+                    javaType="list">
+        </collection>
+    </resultMap>
+    <sql id="authorityColumn">
+        id, `name`, status, identifier, parent_id
+    </sql >
+    <insert id="insert">
+        insert into authority(`name`, identifier, parent_id)
+        values(#{authorityPo.name},#{authorityPo.identifier},#{authorityPo.parentId})
+    </insert>
+    <update id="update">
+        update authority
+        set `name` = #{name}, identifier = #{identifier}, parent_id = #{parentId}
+        where id = #{id}
+    </update>
+    <select id="getAuthoritiesByRoleIds" resultType="AuthorityPo">
+      select a.id, `name`, status, parent_id
+      from authority a,role_authority ra
+      where a.id = ra.authority_id
+        <choose>
+            <when test="roleIds != null and roleIds.size() > 0">
+                and ra.role_id in
+                <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+                  #{roleId}
+                </foreach>
+            </when>
+            <otherwise>
+                and 1=0
+            </otherwise>
+        </choose>
+    </select>
+    <select id="getAuthorityTree" resultMap="authorityTree">
+        select <include refid="authorityColumn"/>
+        from authority
+        where parent_id = 0
+    </select>
+    <select id="getAuthoritiesByParentId" resultMap="authorityTree">
+        select <include refid="authorityColumn"/>
+        from authority
+        where parent_id = #{parentId}
+    </select>
+    <select id="getAllAuthority" resultType="AuthorityPo">
+        select <include refid="authorityColumn"/>
+        from authority
+    </select>
+
+</mapper>

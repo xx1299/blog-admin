@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xx.bootblog.mapper.RoleMapper">
+    <sql id="roleColumn">
+        id, `name`, `desc`
+    </sql >
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into role(`name`,`desc`)
+        values(#{rolePo.name},#{rolePo.desc})
+    </insert>
+    <insert id="insertRoleAuthority">
+        insert into role_authority(role_id,authority_id)
+        values(#{roleId},#{authorityId})
+    </insert>
+    <update id="update">
+        update role
+        set `name` = #{name}, `desc` = #{desc}
+        where id = #{id}
+    </update>
+    <delete id="delete">
+        delete from role
+        where id = #{id}
+    </delete>
+    <delete id="deleteRoleAllAuthority">
+        delete from role_authority
+        where role_id = #{id}
+    </delete>
+    <select id="getRolesByAdminId" resultType="RolePo">
+        select r.id,r.name,r.desc
+        from role r,admin_role ar
+        where ar.admin_id = #{id} and r.id = ar.role_id
+    </select>
+    <select id="getAllRole" resultType="RolePo">
+        select <include refid="roleColumn"/>
+        from role
+    </select>
+</mapper>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>xxBlog</title>
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="/static/css/base.css" th:href="@{/css/base.css}" rel="stylesheet" />
+    <link href="/static/css/index.css" th:href="@{/css/search.css}" rel="stylesheet" />
+    <link href="/static/css/index.css" th:href="@{/css/bar.css}" rel="stylesheet" />
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边 ) -->
+    <script src="/static/bootstrap/js/jquery.min.js" th:src="@{/bootstrap/js/jquery.min.js}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="/static/bootstrap/js/bootstrap.min.js" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="/static/bootstrap/popper.min.js" th:src="@{/bootstrap/popper.min.js}"></script>
+    <script src="/static/js/index.js" th:src="@{/js/search.js}"></script>
+</head>
+<body>
+<div id="search">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 ">
+                <div class="search_header">
+                    <h3 class="blog_title"><a th:href="@{/index}">xxBlog</a></h3>
+                    <form th:action="@{/search}" id="search_form">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="输入关键字搜索" aria-label="Recipient's username" aria-describedby="button-addon2" th:value="${keyWord}" name="keyWord">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="search_button">搜索</button>
+                            </div>
+                        </div>
+                        <div class="form-check" style="display: inline-block;">
+                            <input class="form-check-input" type="radio" name="searchType" id="exampleRadios1" value="all" th:checked="${searchType=='all'}">
+                            <label class="form-check-label" for="exampleRadios1">
+                                根据全文
+                            </label>
+                        </div>
+                        <div class="form-check" style="display: inline-block;">
+                            <input class="form-check-input" type="radio" name="searchType" id="exampleRadios2" value="title" th:checked="${searchType=='title'}">
+                            <label class="form-check-label" for="exampleRadios2">
+                                根据标题
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <h6 style="padding: 0 10%;margin-top: 1rem;">
+                    <small class="text-muted" th:text="${#arrays.isEmpty(articles)}?'搜索出相关文章0篇，站内文章共有'+${total}+'篇':'搜索出相关文章'+${#arrays.length(articles)}+'篇，站内文章共有'+${total}+'篇'"></small>
+                </h6>
+                <div class="search_point" th:if="${#arrays.isEmpty(articles)}">
+                    <p th:text="'抱歉，没有搜索到与'+${keyWord}+'相关的文章'"></p>
+                    <h6>xxBlog推荐您：</h6>
+                    <ul>
+                        <li>1.检查输入的文字是否有误</li>
+                        <li>2.改用常见字进行搜索</li>
+                        <li>3.搜索文字不要过长，请适当减短</li>
+                        <li>4.更改搜索方式</li>
+                    </ul>
+                </div>
+                <div class="search_article">
+                    <div class="card mb-3 article_detail" th:each="article:${articles}">
+                        <div class="row no-gutters">
+                            <div class="col-md-12">
+                                <div class="card-body article_body">
+                                    <h6 class="card-title"><a th:href="@{/article/}+${article.aid}" th:utext="${article.title}"></a></h6>
+                                    <p class="card-text" style="font-size: 14px;" th:utext="${#strings.abbreviate(article.content,50)}"></p>
+                                    <p class="card-text">
+                                        <small class="text-muted" th:text="${article.programa.pname}">linux</small>
+                                        <small class="text-muted" th:text="${#dates.format(article.releasetime,'yyyy-MM-dd')}">发表于2020-5-18</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="bar::footerbar"></div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

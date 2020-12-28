@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>xxBlog</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/base.css}" rel="stylesheet" />
+    <link th:href="@{/css/article.css}" rel="stylesheet" />
+    <link th:href="@{/css/bar.css}" rel="stylesheet" />
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边 ) -->
+    <script th:src="@{/bootstrap/js/jquery.min.js}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/bootstrap/popper.min.js}"></script>
+    <script th:src="@{/js/header.js}"></script>
+    <script th:src="@{/js/article.js}"></script>
+</head>
+<body>
+<div th:replace="bar::topbar"></div>
+
+<div id="article">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 body_left" style="padding-top: 30px;">
+
+                <div class="row" style="border-bottom: 1px solid #e0e0e0;">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol style="display: flex;list-style: none;padding-left: 0;">
+                                您现在在的位置是：
+                                <li class="breadcrumb-item">
+                                    <a th:href="@{/index}">首页</a>
+                                </li>
+                                <li class="breadcrumb-item article-programa" aria-current="page">
+                                    <a th:href="@{/programa/}+${article.programa.pid}" th:text="${article.programa.pname}"></a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <div class="article-title" th:text="${article.title}"></div>
+                <p class="article-releasetime" th:text="${#dates.format(article.releasetime,'yyyy-MM-dd')}">
+                    2019-11-30 21:43:46
+                </p>
+                <div class="article-body" th:utext="${article.content}">
+                </div>
+                <div class="pandn">
+                    <div class="pre" th:if="${preArticle!=null}">
+                        上一篇：<a th:href="@{/article/}+${preArticle.aid}" th:text="${preArticle.title}"></a>
+                    </div>
+                    <div class="pre" th:if="${preArticle==null}">
+                        上一篇：无
+                    </div>
+                    <div class="nex" th:if="${sufArticle!=null}">
+                        下一篇：<a th:href="@{/article/}+${sufArticle.aid}" th:text="${sufArticle.title}"></a>
+                    </div>
+                    <div class="nex" th:if="${sufArticle==null}">
+                        下一篇：无
+                    </div>
+                </div>
+                <h6 class="mb-4 mt-4" th:text="'该文章有'+${#lists.size(article.reviews)}+'条评论'">该文章有五条评论</h6>
+                <div class="row mb-2 border-bottom" th:each="review:${article.reviews}">
+                    <div class="col-2 user_head">
+                        <img th:src="${review.user.headimg}">
+                    </div>
+                    <div class="col-10 review_body">
+                        <h6 th:text="${review.user.uname}">xx</h6>
+                        <blockquote class="blockquote">
+                            <p class="mb-0" th:text="${review.message}">测试，写开始开始测试，写的非常不错开始测试，写的非常测试，写的非常不错开始测试，写的非常不错开始测试，写的非常测试，写的非常不错开始测试，写的不错开始测试，写的非常不错开始测试，写的非常不错开始测试，写的非常不错开始</p>
+                            <div class="text-right"><small class="text-muted" th:text="${#dates.format(review.rtime,'yyyy-MM-dd')}">2020-5-19</small></div>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <form id="postReview">
+                    <input id="uid" type="hidden" th:value="${session.user.uid}" th:if="${session.user!=null}">
+                    <input id="aid" type="hidden" th:value="${article.aid}">
+                    <div class="form-group">
+                        <label for="message">发表评论</label>
+                        <textarea class="form-control" id="message" rows="3" th:if="${session.user!=null}"></textarea>
+                        <textarea class="form-control"  rows="3" disabled th:if="${session.user==null}"></textarea>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <button type="button" id="commentButton" class="btn btn-info" style="font-size: 14px;" th:if="${session.user!=null}">发表评论</button>
+                            <button type="button" id="loginButton" class="btn btn-info" style="font-size: 14px;" th:if="${session.user==null}">登陆发表评论</button>
+                            <span id="commentMsg"></span>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-md-4 body_right d-md-block" style="display: none">
+                <div class="linkbox">
+                    <ul>
+                        <li><a href="./index.jsp" th:href="@{/index}" class="linkd">博客主页</a></li>
+                        <li th:each="programa:${programas}"><a class="linkd" th:href="@{/section/}+${programa.pid}" th:text="${programa.pname}"></a></li>
+                    </ul>
+                </div>
+                <h5 class="d-md-block" style="display: none">友情链接</h5>
+                <div class="blogroll">
+                    <span th:each="blogroll:${blogrolls}"><a href="#" th:href="${blogroll.burl}" th:text="${blogroll.bname}">叶子博客</a>&ensp;</span>
+                </div>
+                <h5 class="d-md-block" style="display: none">网站信息</h5>
+                <div class="blogInformation">
+                    <ul>
+                        <li ><img th:src="@{/img/wenzhang.png}" src="./img/16.png">文章总数:<span th:text="${information.articleTotal}"></span></li>
+                        <li><img th:src="@{/img/lanmu.png}" src="./img/16.png">栏目总数:<span th:text="${information.programaTotal}"></span></li>
+                        <li><img th:src="@{/img/liuyan.png}" src="./img/16.png">留言数量:<span th:text="${information.reviewTotal}"></span></li>
+                        <li><img th:src="@{/img/liulang.png}" src="./img/16.png">今日浏览人数:<span th:text="${information.dayView}"></span></li>
+                        <li><img th:src="@{/img/shijian.png}" src="./img/16.png">最后更新:<span th:text="${#dates.format(information.lastTime,'yyyy-MM-dd')}"></span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="bar::footerbar"></div>
+</body>
+</html>

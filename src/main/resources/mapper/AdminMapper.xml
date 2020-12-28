@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xx.bootblog.mapper.AdminMapper">
+
+    <sql id="adminColumn">
+        id, `name`, password, avatar, create_time, last_login_time, status
+    </sql >
+    <insert id="insertAdminRole">
+        insert into admin_role(admin_id,role_id)
+        values(#{adminId},#{roleId})
+    </insert>
+    <update id="updateLastLoginTime">
+        update admin
+        set last_login_time = #{lastLoginTime}
+        where id = #{id} and status = 1
+    </update>
+    <update id="updateStatus">
+        update admin
+        set status = #{status}
+        where id = #{id}
+    </update>
+    <delete id="deleteAdminAllRole">
+        delete from
+        admin_role
+        where admin_id = #{id}
+    </delete>
+
+    <select id="getAdminById" resultType="AdminPo">
+        select <include refid= "adminColumn"/>
+        from admin
+        where id = #{id} and status = 1
+    </select>
+    <select id="getAdminByUserName" resultType="AdminPo">
+        select <include refid= "adminColumn"/>
+        from admin
+        where `name` = #{name} and status = 1
+    </select>
+    <select id="getAllAdmin" resultType="AdminPo">
+        select <include refid= "adminColumn"/>
+        from admin
+    </select>
+
+
+</mapper>

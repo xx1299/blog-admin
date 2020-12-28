@@ -1,0 +1,66 @@
+package com.xx.bootblog.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.xx.bootblog.domain.dto.PageInfo;
+import com.xx.bootblog.domain.dto.Role;
+import com.xx.bootblog.domain.params.AddRoleParams;
+import com.xx.bootblog.domain.params.EditRoleParams;
+import com.xx.bootblog.domain.po.RolePo;
+import com.xx.bootblog.mapper.RoleMapper;
+import com.xx.bootblog.service.RoleService;
+import com.xx.bootblog.utils.DozerUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class RoleServiceImpl implements RoleService {
+
+    @Autowired
+    RoleMapper roleMapper;
+
+    @Override
+    public PageInfo<Role> getRoleByPage(Integer pageSize, Integer pageNum) {
+
+        Page<RolePo> page = PageHelper.startPage(pageNum, pageSize);
+        roleMapper.getAllRole();
+        return PageInfo.<Role>builder()
+                .data(page.getResult().stream().map(it->DozerUtils.map(it,Role.class)).collect(Collectors.toList()))
+                .total(page.getTotal())
+                .pageNum(pageNum).pageSize(pageSize).build();
+    }
+
+    @Override
+    @Transactional
+    public void addRole(AddRoleParams addRoleParams) {
+        RolePo rolePo = DozerUtils.map(addRoleParams, RolePo.class);
+        roleMapper.insert(rolePo);
+        addRoleParams.getAuthorityIds().forEach(authorityId->{
+            roleMapper.insertRoleAuthority(rolePo.getId(),authorityId);
+        });
+
+    }
+
+    @Override
+    public void delRole(Integer id) {
+        roleMapper.delete(id);
+    }
+
+    @Override
+    public List<Role> getAllRole() {
+        return roleMapper.getAllRole().stream().map(it->DozerUtils.map(it,Role.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void editRole(EditRoleParams editRoleParams) {
+        roleMapper.deleteRoleAllAuthority(editRoleParams.getId());
+        roleMapper.update(editRoleParams.getId(),editRoleParams.getName(),editRoleParams.getDesc());
+        editRoleParams.getAuthorityIds().forEach(authorityId->{
+            roleMapper.insertRoleAuthority(editRoleParams.getId(),authorityId);
+        });
+    }
+}

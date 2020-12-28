@@ -1,0 +1,17 @@
+.text {
+    width: 730px;
+}
+.ylimg {
+    width: 230px;
+    height: 149px;
+    float: left;
+    position: relative;
+}
+#file {
+    opacity: 0;
+    width: 230px;
+    height: 149px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}

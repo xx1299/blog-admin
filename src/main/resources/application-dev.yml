@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.101.142.65:3306/blog?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 1299
+  redis:
+    host: 47.101.142.65
+    port: 6379
+    password: 1299
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,file:E:/java/upload/
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.xx.bootblog.domain
+  configuration:
+    map-underscore-to-camel-case: true
+pagehelper:
+  helper-dialect: mysql
+  # 分页合理化参数，默认值为false。当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页
+  reasonable: true
+  # 支持通过 Mapper 接口参数来传递分页参数
+  support-methods-arguments: true

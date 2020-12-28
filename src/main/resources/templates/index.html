@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>xxBlog</title>
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="/static/css/base.css" th:href="@{/css/base.css}" rel="stylesheet" />
+    <link href="/static/css/index.css" th:href="@{/css/index.css}" rel="stylesheet" />
+    <link href="/static/css/bar.css" th:href="@{/css/bar.css}" rel="stylesheet" />
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边 ) -->
+    <script src="/static/bootstrap/js/jquery.min.js" th:src="@{/bootstrap/js/jquery.min.js}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="/static/bootstrap/js/bootstrap.min.js" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="/static/bootstrap/popper.min.js" th:src="@{/bootstrap/popper.min.js}"></script>
+    <script src="/static/js/header.js" th:src="@{/js/header.js}"></script>
+    <script src="/static/js/index.js" th:src="@{/js/index.js}"></script>
+</head>
+<body>
+<div th:replace="bar::topbar"></div>
+
+<div id="newpaper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 body_left" style="padding-top: 10px;">
+                <div th:replace="bar::carousel"></div>
+                <div class="row" style="border-bottom: 1px solid #e0e0e0;">
+                    <div class="col-md-12">
+                        <h6>最新文章</h6>
+                    </div>
+                </div>
+                <div id="newpaperbox">
+                    <div class="card" style="margin-top: 10px;" th:each="article:${articles}">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img th:src="@{${article.img}}" class="card-img view_img" style="padding: 5px;">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body p-2">
+                                    <a class="title-a" href="#" th:href="@{/article/}+${article.aid}">
+                                        <h5 class="card-title  mb-2 mb-md-0 mb-lg-2" th:text="${article.title}"></h5>
+                                    </a>
+                                    <p class="card-text" style="color: #666666;font-size: 12px;" th:text="${#strings.abbreviate(article.content,50)}"></p>
+                                    <a class="d-md-none detail" href="#" th:href="@{/article/}+${article.aid}">点击详情</a>
+                                    <div class="text-bottom d-md-flex" style="display: none">
+                                        <p class="card-text card_programa">
+                                            <a class='pga' th:href="@{/section/}+${article.programa.pid}" th:text="${article.programa.pname}"></a>
+                                        </p>
+                                        <p class="card-text card_time" th:text="${#dates.format(article.releasetime,'yyyy-MM-dd')}"></p>
+                                        <p class="card-text card_view" th:text="${article.pageview}">${value.view}</p>
+                                        <p class="card-text card_nice" th:text="${article.praise}" th:onclick="'likeClick(this,'+${article.aid}+')'">${value.like}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 body_right d-md-block" style="display: none">
+                <div class="touch">
+                    <h5>联系我</h5>
+                    <img id="wcimg" class="img-fluid" th:src="@{/img/wechat1.jpg}" style="padding-left: 15px;padding-right: 15px;" />
+                    <img id="qqimg" class="img-fluid" th:src="@{/img/qq.jpg}" style="padding-left: 15px;padding-right: 15px;display: none;" />
+                    <div class="btn-group btn-group-toggle tbtn" data-toggle="buttons">
+                        <label class="btn btn-light active" id="btn1">
+                            <input type="radio" name="options" id="option1" autocomplete="off" checked> WeChat
+                        </label>
+                        <label class="btn btn-light" id="btn2">
+                            <input type="radio" name="options" id="option2" autocomplete="off"> QQ
+                        </label>
+                    </div>
+                </div>
+                <h5 class="d-md-block" style="display: none">友情链接</h5>
+                <div class="blogroll">
+                    <span th:each="blogroll:${blogrolls}"><a href="#" th:href="${blogroll.burl}" th:text="${blogroll.bname}">叶子博客</a>&ensp;</span>
+                </div>
+                <h5 class="d-md-block" style="display: none">网站信息</h5>
+                <div class="blogInformation">
+                    <ul>
+                        <li><img th:src="@{/img/wenzhang.png}" src="./img/16.png">文章总数:<span th:text="${information.articleTotal}"></span></li>
+                        <li><img th:src="@{/img/lanmu.png}" src="./img/16.png">栏目总数:<span th:text="${information.programaTotal}"></span></li>
+                        <li><img th:src="@{/img/liuyan.png}" src="./img/16.png">留言数量:<span th:text="${information.reviewTotal}"></span></li>
+                        <li><img th:src="@{/img/liulang.png}" src="./img/16.png">今日浏览人数:<span th:text="${information.dayView}"></span></li>
+                        <li><img th:src="@{/img/shijian.png}" src="./img/16.png">最后更新:<span th:text="${#dates.format(information.lastTime,'yyyy-MM-dd')}"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="bar::footerbar"></div>
+
+</body>
+</html>

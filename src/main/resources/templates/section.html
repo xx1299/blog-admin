@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>xxBlog</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>xxBlog</title>
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="/static/css/base.css" th:href="@{/css/base.css}" rel="stylesheet" />
+    <link href="/static/css/index.css" th:href="@{/css/index_programa.css}" rel="stylesheet" />
+    <link href="/static/css/bar.css" th:href="@{/css/bar.css}" rel="stylesheet" />
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边 ) -->
+    <script src="/static/bootstrap/js/jquery.min.js" th:src="@{/bootstrap/js/jquery.min.js}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="/static/bootstrap/js/bootstrap.min.js" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="/static/bootstrap/popper.min.js" th:src="@{/bootstrap/popper.min.js}"></script>
+    <script src="/static/js/header.js" th:src="@{/js/header.js}"></script>
+    <script src="/static/js/index.js" th:src="@{/js/index_programa.js}"></script>
+</head>
+<body>
+<div th:replace="bar::topbar"></div>
+
+<div id="index_programa">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 body_left" style="padding-top: 30px;">
+                <div class="row" style="border-bottom: 1px solid #e0e0e0;">
+                    <div class="col-xl-2 col-lg-2 col-md-3">
+                        <h6 id="articlePro" th:text="${currentPrograma.pname}" th:value="${currentPrograma.pid}"></h6>
+                    </div>
+                    <div class="col-xl-7 col-lg-6 col-md-4 d-md-block" style="display: none"></div>
+                    <div class="col-xl-3 col-lg-4 col-md-5 d-md-block" style="display: none">
+                        <a class="rindex" href="index.jsp" th:href="@{/index}">返回首页>></a>
+                    </div>
+                </div>
+                <div id="index_programaBox">
+                    <div class="card" style="margin-bottom: 10px;" th:each="article:${articles}">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="${value.img}" class="card-img view_img" style="padding: 5px;" th:src="${article.img}">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body p-2">
+                                    <a class="title-a" href="./article.jsp?aid=${value.aid}" th:href="@{/article/}+${article.aid}">
+                                        <h5 class="card-title  mb-2 mb-md-0 mb-lg-2" th:text="${article.title}">${value.title}</h5></a>
+                                    <p class="card-text" style="color: #666666;font-size: 12px;" th:text="${#strings.abbreviate(article.content,50)}"></p>
+                                    <a class="d-md-none detail" th:href="@{/article/}+${article.aid}">点击详情</a>
+                                    <div class="text-bottom d-md-flex" style="display: none">
+                                        <p class="card-text card_programa" >
+                                            <a class='pga' th:href="@{/section/}+${article.programa.pid}" th:text="${article.programa.pname}">${value.programa.name}</a>
+                                        </p>
+                                        <p class="card-text card_time" th:text="${#dates.format(article.releasetime,'yyyy-MM-dd')}">${value.releasetime}</p>
+                                        <p class="card-text card_view" th:text="${article.pageview}">${value.view}</p>
+                                        <p class="card-text card_nice" th:text="${article.praise}" th:onclick="'likeClick(this,'+${article.aid}+')'">${value.like}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" style="display: none" id="loading">
+                    <div class="spinner-border text-secondary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation" class="d-md-block" style="display: none;height: 50px;position: relative" >
+                    <ul class="pagination" style="display: inline-block;margin: 0 auto;position: absolute;left: 50%;transform: translate(-50%)">
+                        <li class="page-item disabled" style="display: inline-block;float: left;cursor: pointer;">
+                            <span class="previous page-link btn disabled" href="#" aria-label="Previous">
+                                &laquo;
+                            </span>
+                        </li>
+                        <div id="currentPage" style="display: inline-block;float: left;">
+                            <li class="page-item active" style="display: inline-block;float: left;cursor: pointer;">
+                                <span class="page-link" onclick="index_programaClick(this)" >1</span>
+                            </li>
+                            <li class="page-item" style="display: inline-block;float: left;cursor: pointer;" th:each="i:${#numbers.sequence(2,pages)}" th:if="${pages>1}">
+                                <span class="page-link" onclick="index_programaClick(this)" th:text="${i}"></span>
+                            </li>
+                        </div>
+                        <li class="page-item" th:class="${pages==1}?'page-item disabled':'page-item'" style="display: inline-block;float: left;cursor: pointer;">
+                            <span class="next page-link btn" th:class="${pages==1}?'next page-link btn disabled':'next page-link btn'" href="#" aria-label="Next">
+                                &raquo;
+                            </span>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-4 body_right d-md-block" style="display: none">
+                <div class="linkbox">
+                    <ul>
+                        <li><a href="./index.jsp" th:href="@{/index}" class="linkd">博客主页</a></li>
+                        <li th:each="programa:${programas}"><a class="linkd" th:href="@{/section/}+${programa.pid}" th:text="${programa.pname}"></a></li>
+                    </ul>
+                </div>
+                <h5 class="d-md-block" style="display: none">友情链接</h5>
+                <div class="blogroll">
+                    <span th:each="blogroll:${blogrolls}"><a href="#" th:href="${blogroll.burl}" th:text="${blogroll.bname}">叶子博客</a>&ensp;</span>
+                </div>
+                <h5 class="d-md-block" style="display: none">网站信息</h5>
+                <div class="blogInformation">
+                    <ul>
+                        <li ><img th:src="@{/img/wenzhang.png}" src="./img/16.png">文章总数:<span th:text="${information.articleTotal}"></span></li>
+                        <li><img th:src="@{/img/lanmu.png}" src="./img/16.png">栏目总数:<span th:text="${information.programaTotal}"></span></li>
+                        <li><img th:src="@{/img/liuyan.png}" src="./img/16.png">留言数量:<span th:text="${information.reviewTotal}"></span></li>
+                        <li><img th:src="@{/img/liulang.png}" src="./img/16.png">今日浏览人数:<span th:text="${information.dayView}"></span></li>
+                        <li><img th:src="@{/img/shijian.png}" src="./img/16.png">最后更新:<span th:text="${#dates.format(information.lastTime,'yyyy-MM-dd')}"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="bar::footerbar"></div>
+</body>
+</html>

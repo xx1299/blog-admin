@@ -1,0 +1,80 @@
+/*#mood .container{*/
+	/*height: 1000px;*/
+/*}*/
+#mood{
+	background-color: whitesmoke;
+}
+#mood .container .row .body_left .row .rindex{
+	display: block;
+	color: #666666;
+	font-size: 12px;
+	padding-left: 50px;
+	text-align: right;
+	height: 27px;
+	line-height: 27px;
+}
+#mood .container .row .body_left .suibi{
+	height: 100px;
+	width: 720px;
+	border:1px solid #e0e0e0;
+	border-radius:3px;
+	padding-top: 20px;
+	padding-left: 30px;
+	font-size: 12px;
+	background:#CCE5FF ;
+}
+#mood .container .row .body_left .suibi p{
+	margin-bottom: 5px;
+}
+/*#center .container .row .col-md-8 .suibi .suibi_body{
+	height: 100px;
+	width: 720px;
+	padding: 30px;
+	font-size: 12px;
+}*/
+#mood .container .row .body_right{
+	position: relative;
+}
+#mood .container .row .body_right h5{
+	padding-top: 20px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e0e0e0;
+}
+#mood .container .row .body_right ul{
+	list-style-type: disc;
+	padding-left: 20px;
+}
+
+#mood .container .row .body_right ul li a{
+	font-size: 13px;
+	color: #245269;
+}
+#mood .container .row .body_right .linkbox{
+	margin-top: 30px;
+	width: 100%;
+}
+#mood .container .row .body_right .linkbox ul{
+	list-style: none;
+	display: flex;
+	justify-content: start;
+	flex-wrap: wrap;
+	padding-left: 0;
+}
+#mood .container .row .body_right .linkbox ul li{
+	width: 32%;
+	padding: 13% 0;
+	margin: 1px;
+	border: 1px solid #E0E0E0;
+	text-align: center;
+	font-size: 14px;
+	background:#CCE5FF ;
+	color: #666666;
+}
+#mood .container .row .body_right .linkbox ul li .linkd{
+	display: block;
+	transition:all 1s;
+}
+#mood .container .row .body_right .linkbox ul li:hover .linkd{
+	transform: rotate(360deg);
+}
+
