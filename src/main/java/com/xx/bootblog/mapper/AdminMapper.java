@@ -21,4 +21,6 @@ public interface AdminMapper {
     void deleteAdminAllRole(Integer id);
 
     void insertAdminRole(@Param("adminId") Integer adminId, @Param("roleId") Integer roleId);
+
+    List<AdminPo> getAdminsByRoleId(Integer roleId);
 }

@@ -39,4 +39,10 @@ public class AuthorityController {
         return AjxsResponse.success();
     }
 
+    @DeleteMapping("/authorities/{id}")
+    public AjxsResponse delAuthority(@PathVariable("id") Integer id){
+        authorityService.delAuthority(id);
+        return AjxsResponse.success();
+    }
+
 }

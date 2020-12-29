@@ -25,6 +25,18 @@
         set `name` = #{name}, identifier = #{identifier}, parent_id = #{parentId}
         where id = #{id}
     </update>
+    <delete id="delete">
+        delete from authority
+        where id = #{id}
+    </delete>
+    <delete id="deleteByParentId">
+        delete from authority
+        where parent_id = #{parentId}
+    </delete>
+    <delete id="deleteRoleAuthorityByAuthorityId">
+        delete from role_authority
+        where authority_id = #{authorityId}
+    </delete>
     <select id="getAuthoritiesByRoleIds" resultType="AuthorityPo">
       select a.id, `name`, status, parent_id
       from authority a,role_authority ra

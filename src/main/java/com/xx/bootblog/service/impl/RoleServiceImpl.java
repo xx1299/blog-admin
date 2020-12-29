@@ -2,11 +2,14 @@ package com.xx.bootblog.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.xx.bootblog.common.exception.CustomException;
+import com.xx.bootblog.common.exception.ExceptionType;
 import com.xx.bootblog.domain.dto.PageInfo;
 import com.xx.bootblog.domain.dto.Role;
 import com.xx.bootblog.domain.params.AddRoleParams;
 import com.xx.bootblog.domain.params.EditRoleParams;
 import com.xx.bootblog.domain.po.RolePo;
+import com.xx.bootblog.mapper.AdminMapper;
 import com.xx.bootblog.mapper.RoleMapper;
 import com.xx.bootblog.service.RoleService;
 import com.xx.bootblog.utils.DozerUtils;
@@ -22,6 +25,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     RoleMapper roleMapper;
+
+    @Autowired
+    AdminMapper adminMapper;
 
     @Override
     public PageInfo<Role> getRoleByPage(Integer pageSize, Integer pageNum) {
@@ -42,12 +48,16 @@ public class RoleServiceImpl implements RoleService {
         addRoleParams.getAuthorityIds().forEach(authorityId->{
             roleMapper.insertRoleAuthority(rolePo.getId(),authorityId);
         });
-
     }
 
     @Override
+    @Transactional
     public void delRole(Integer id) {
+        if (!adminMapper.getAdminsByRoleId(id).isEmpty()){
+            throw new CustomException(ExceptionType.SYSTEM_ERROR);
+        }
         roleMapper.delete(id);
+        roleMapper.deleteRoleAuthorityByRoleId(id);
     }
 
     @Override
@@ -57,7 +67,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void editRole(EditRoleParams editRoleParams) {
-        roleMapper.deleteRoleAllAuthority(editRoleParams.getId());
+        roleMapper.deleteRoleAuthorityByRoleId(editRoleParams.getId());
         roleMapper.update(editRoleParams.getId(),editRoleParams.getName(),editRoleParams.getDesc());
         editRoleParams.getAuthorityIds().forEach(authorityId->{
             roleMapper.insertRoleAuthority(editRoleParams.getId(),authorityId);

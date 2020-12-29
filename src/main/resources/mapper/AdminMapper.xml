@@ -39,6 +39,11 @@
         select <include refid= "adminColumn"/>
         from admin
     </select>
+    <select id="getAdminsByRoleId" resultType="AdminPo">
+        select a.id, `name`, password, avatar, create_time, last_login_time, status
+        from admin a , admin_role ar
+        where a.id = ar.admin_id and ar.role_id = #{roleId}
+    </select>
 
 
 </mapper>

@@ -18,4 +18,10 @@ public interface AuthorityMapper {
     void insert(@Param("authorityPo") AuthorityPo authorityPo);
 
     void update(@Param("id") Integer id, @Param("name") String name, @Param("identifier") String identifier, @Param("parentId") Integer parentId);
+
+    void delete(Integer id);
+
+    void deleteByParentId(Integer parentId);
+
+    void deleteRoleAuthorityByAuthorityId(Integer authorityId);
 }

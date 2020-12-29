@@ -21,9 +21,9 @@
         delete from role
         where id = #{id}
     </delete>
-    <delete id="deleteRoleAllAuthority">
+    <delete id="deleteRoleAuthorityByRoleId">
         delete from role_authority
-        where role_id = #{id}
+        where role_id = #{roleId}
     </delete>
     <select id="getRolesByAdminId" resultType="RolePo">
         select r.id,r.name,r.desc

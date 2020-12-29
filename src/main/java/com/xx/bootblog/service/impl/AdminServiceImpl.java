@@ -88,11 +88,11 @@ public class AdminServiceImpl implements AdminService {
         adminMapper.getAllAdmin();
         List<Admin> admins = page.getResult()
                 .stream()
-                .map(it -> {
-                    Admin admin = DozerUtils.map(it, Admin.class);
+                .map(adminPo -> {
+                    Admin admin = DozerUtils.map(adminPo, Admin.class);
                     List<Role> roles= roleMapper.getRolesByAdminId(admin.getId())
                             .stream()
-                            .map(rolePo -> DozerUtils.map(it, Role.class))
+                            .map(rolePo -> DozerUtils.map(rolePo, Role.class))
                             .collect(Collectors.toList());
                     admin.setRoles(roles);
                     return admin;

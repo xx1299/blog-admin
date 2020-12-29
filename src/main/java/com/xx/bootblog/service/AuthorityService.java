@@ -14,4 +14,6 @@ public interface AuthorityService {
     void addAuthority(AddAuthorityParams addAuthorityParams);
 
     void editAuthority(EditAuthorityParams editAuthorityParams);
+
+    void delAuthority(Integer id);
 }

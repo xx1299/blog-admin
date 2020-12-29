@@ -9,6 +9,7 @@ import com.xx.bootblog.service.AuthorityService;
 import com.xx.bootblog.utils.DozerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,5 +38,13 @@ public class AuthorityServiceImpl implements AuthorityService {
     public void editAuthority(EditAuthorityParams editAuthorityParams) {
         authorityMapper.update(editAuthorityParams.getId(),editAuthorityParams.getName(),
                 editAuthorityParams.getIdentifier(),editAuthorityParams.getParentId());
+    }
+
+    @Override
+    @Transactional
+    public void delAuthority(Integer id) {
+        authorityMapper.deleteByParentId(id);
+        authorityMapper.delete(id);
+        authorityMapper.deleteRoleAuthorityByAuthorityId(id);
     }
 }

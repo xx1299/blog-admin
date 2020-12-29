@@ -16,7 +16,7 @@ public interface RoleMapper {
 
     void insertRoleAuthority(@Param("roleId") Integer roleId, @Param("authorityId") Integer authorityId);
 
-    void deleteRoleAllAuthority(Integer id);
+    void deleteRoleAuthorityByRoleId(Integer roleId);
 
     void update(@Param("id") Integer id, @Param("name") String name, @Param("desc") String desc);
 }
