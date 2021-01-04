@@ -24,4 +24,6 @@ public interface AuthorityMapper {
     void deleteByParentId(Integer parentId);
 
     void deleteRoleAuthorityByAuthorityId(Integer authorityId);
+
+    List<AuthorityPo> getAuthoritiesByRoleId(Integer roleId);
 }

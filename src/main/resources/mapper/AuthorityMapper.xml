@@ -67,5 +67,10 @@
         select <include refid="authorityColumn"/>
         from authority
     </select>
+    <select id="getAuthoritiesByRoleId" resultType="AuthorityPo">
+        select a.id, `name`, status, parent_id
+        from authority a,role_authority ra
+        where a.id = ra.authority_id and ra.role_id = #{roleId}
+    </select>
 
 </mapper>

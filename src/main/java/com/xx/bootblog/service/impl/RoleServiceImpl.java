@@ -8,8 +8,10 @@ import com.xx.bootblog.domain.dto.PageInfo;
 import com.xx.bootblog.domain.dto.Role;
 import com.xx.bootblog.domain.params.AddRoleParams;
 import com.xx.bootblog.domain.params.EditRoleParams;
+import com.xx.bootblog.domain.po.AuthorityPo;
 import com.xx.bootblog.domain.po.RolePo;
 import com.xx.bootblog.mapper.AdminMapper;
+import com.xx.bootblog.mapper.AuthorityMapper;
 import com.xx.bootblog.mapper.RoleMapper;
 import com.xx.bootblog.service.RoleService;
 import com.xx.bootblog.utils.DozerUtils;
@@ -28,6 +30,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     AdminMapper adminMapper;
+
+    @Autowired
+    AuthorityMapper authorityMapper;
 
     @Override
     public PageInfo<Role> getRoleByPage(Integer pageSize, Integer pageNum) {
@@ -62,7 +67,14 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> getAllRole() {
-        return roleMapper.getAllRole().stream().map(it->DozerUtils.map(it,Role.class)).collect(Collectors.toList());
+        return roleMapper.getAllRole()
+                .stream()
+                .map(it->{
+                    Role role = DozerUtils.map(it, Role.class);
+                    role.setAuthorityIds(authorityMapper.getAuthoritiesByRoleId(role.getId()).stream().map(AuthorityPo::getId).collect(Collectors.toList()));
+                    return role;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

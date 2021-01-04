@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.ibatis.type.Alias;
 
 import java.util.List;
 
@@ -20,6 +19,6 @@ public class Role {
 
     private String desc;
 
-    private List<Authority> authoritieList;
+    private List<Integer> authorityIds;
 
 }
