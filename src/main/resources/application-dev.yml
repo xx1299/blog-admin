@@ -10,6 +10,8 @@ spring:
     url: jdbc:mysql://47.101.142.65:3306/blog?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: 1299
+    hikari:
+      max-lifetime: 500000
   redis:
     host: 47.101.142.65
     port: 6379
