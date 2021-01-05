@@ -23,4 +23,6 @@ public interface AdminMapper {
     void insertAdminRole(@Param("adminId") Integer adminId, @Param("roleId") Integer roleId);
 
     List<AdminPo> getAdminsByRoleId(Integer roleId);
+
+    Optional<AdminPo> getAdminByEmail(String email);
 }

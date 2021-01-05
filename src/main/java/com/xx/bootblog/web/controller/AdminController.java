@@ -45,7 +45,7 @@ public class AdminController {
     }
 
     @PutMapping("/admins/{id}/roles")
-    public AjxsResponse assginAdminRole(@PathVariable("id") Integer id, List<Integer> roleIds){
+    public AjxsResponse assginAdminRole(@PathVariable("id") Integer id,@RequestBody List<Integer> roleIds){
         adminService.assginAdminRole(id,roleIds);
         return AjxsResponse.success();
     }

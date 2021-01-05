@@ -19,6 +19,8 @@ public class AdminPo {
 
     private String name;
 
+    private String email;
+
     private String password;
 
     private String avatar;

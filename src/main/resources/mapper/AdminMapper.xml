@@ -3,7 +3,7 @@
 <mapper namespace="com.xx.bootblog.mapper.AdminMapper">
 
     <sql id="adminColumn">
-        id, `name`, password, avatar, create_time, last_login_time, status
+        id, `name`, email, password, avatar, create_time, last_login_time, status
     </sql >
     <insert id="insertAdminRole">
         insert into admin_role(admin_id,role_id)
@@ -40,9 +40,14 @@
         from admin
     </select>
     <select id="getAdminsByRoleId" resultType="AdminPo">
-        select a.id, `name`, password, avatar, create_time, last_login_time, status
+        select a.id, `name`, email, password, avatar, create_time, last_login_time, status
         from admin a , admin_role ar
         where a.id = ar.admin_id and ar.role_id = #{roleId}
+    </select>
+    <select id="getAdminByEmail" resultType="AdminPo">
+        select <include refid= "adminColumn"/>
+        from admin
+        where email = #{email} and status = 1
     </select>
 
 

@@ -60,7 +60,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Token login(LoginParams loginParams) {
 
-        AdminPo adminPo = adminMapper.getAdminByUserName(loginParams.getName())
+        AdminPo adminPo = adminMapper.getAdminByEmail(loginParams.getEmail())
                 .orElseThrow(() -> new CustomException(ExceptionType.RESOURCE_NOT_FOUND, "该用户不存在"));
         if (!adminPo.getPassword().equals(loginParams.getPassword())){
             throw new CustomException(ExceptionType.USER_INPUT_ERROR,"密码输入错误");
