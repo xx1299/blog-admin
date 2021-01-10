@@ -12,7 +12,6 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Alias("LogPo")
 public class Log {
 
     private Integer id;

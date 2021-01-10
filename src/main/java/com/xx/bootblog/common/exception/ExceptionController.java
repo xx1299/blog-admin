@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * 全局异常处理器
  */
-@RestControllerAdvice(basePackages = "com.s1mple.minischoolsys.web.controller")
+@RestControllerAdvice(basePackages = "com.xx.bootblog.web.controller")
 @Slf4j
 public class ExceptionController {
 

@@ -1,6 +1,7 @@
 package com.xx.bootblog.utils;
 
-import com.newland.installAdmin.config.password.PasswordCheckConfig;
+
+import com.xx.bootblog.config.PasswordCheckConfig;
 
 import java.util.Arrays;
 import java.util.List;

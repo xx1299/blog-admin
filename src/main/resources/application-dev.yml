@@ -28,9 +28,14 @@ mybatis:
   type-aliases-package: com.xx.bootblog.domain
   configuration:
     map-underscore-to-camel-case: true
+
 pagehelper:
   helper-dialect: mysql
   # 分页合理化参数，默认值为false。当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页
   reasonable: true
   # 支持通过 Mapper 接口参数来传递分页参数
   support-methods-arguments: true
+
+logging:
+  level:
+    com.xx.bootblog.mapper: debug

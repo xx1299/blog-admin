@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * 其他类型直接返回
  */
 
-@RestControllerAdvice(basePackages = "com.s1mple.minischoolsys.web.controller")
+@RestControllerAdvice(basePackages = "com.xx.bootblog.web.controller")
 @Component
 @Slf4j
 public class GlobalResponseAdvice implements ResponseBodyAdvice {
