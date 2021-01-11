@@ -18,9 +18,12 @@ spring:
     password: 1299
   mvc:
     static-path-pattern: /**
+    date-format: yyyy-MM-dd HH:mm:ss #将前端传来的该格式的时间转化为date，适用直接接收date参数
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,file:E:/java/upload/
   jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
     serialization:
       write-dates-as-timestamps: true
 mybatis:
@@ -35,7 +38,6 @@ pagehelper:
   reasonable: true
   # 支持通过 Mapper 接口参数来传递分页参数
   support-methods-arguments: true
-
 logging:
   level:
     com.xx.bootblog.mapper: debug
