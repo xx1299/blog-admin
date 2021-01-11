@@ -21,6 +21,8 @@ public class DozerUtils {
         for (Iterator i$ = sourceList.iterator(); i$.hasNext();){
             Object sourceObject = i$.next();
             Object destinationObject = mapper.map(sourceObject, destinationClass);
+            System.out.println(sourceObject);
+            System.out.println(destinationObject);
             destinationList.add(destinationObject);
         }
         return destinationList;

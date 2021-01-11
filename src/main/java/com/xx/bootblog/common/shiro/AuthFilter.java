@@ -71,7 +71,7 @@ public class AuthFilter extends AuthenticatingFilter {
             //处理登录失败的异常
             Throwable throwable = e.getCause() == null ? e : e.getCause();
             e.printStackTrace();
-            AjxsResponse result = AjxsResponse.error(new CustomException(ExceptionType.USER_INPUT_ERROR, "凭证失效"));
+            AjxsResponse result = AjxsResponse.error(new CustomException(ExceptionType.USER_INPUT_ERROR, "身份验证失败"));
             String json = MAPPER.writeValueAsString(result);
             httpResponse.getWriter().print(json);
         } catch (IOException exception) {
