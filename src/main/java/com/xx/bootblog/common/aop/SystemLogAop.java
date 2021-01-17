@@ -3,6 +3,7 @@ package com.xx.bootblog.common.aop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xx.bootblog.common.LogEnum;
 import com.xx.bootblog.common.annotation.SysLog;
 import com.xx.bootblog.domain.dto.UserInfo;
 import com.xx.bootblog.domain.po.LogPo;
@@ -53,7 +54,6 @@ public class SystemLogAop {
         try {
             object = point.proceed();
         } catch (Exception e) {
-            // 异常处理记录日志..log.error(e);
             error  = getExceptionText(e);
             throw e;
         }finally {
@@ -83,7 +83,7 @@ public class SystemLogAop {
             LogPo logPo = LogPo.builder()
                     .ip(userIp).operatorEmail(email).url(requestUri)
                     .method(method).params(requestArgs).title(title).createTime(new Date())
-                    .error(error).type(1)
+                    .error(error).type(LogEnum.SYSTEM_LOG.getKey())
                     .build();
             CompletableFuture.runAsync(() -> {
                 save(logPo);
