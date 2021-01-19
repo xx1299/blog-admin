@@ -2,11 +2,13 @@ package com.xx.bootblog.mapper;
 
 import com.xx.bootblog.domain.po.AdminPo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface AdminMapper {
     Optional<AdminPo> getAdminById(Integer id);
 

@@ -2,9 +2,11 @@ package com.xx.bootblog.mapper;
 
 import com.xx.bootblog.domain.po.RolePo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface RoleMapper {
     List<RolePo> getRolesByAdminId(Integer id);
 

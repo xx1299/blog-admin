@@ -29,8 +29,8 @@ public class LogServiceImpl implements LogService {
                                       String operatorEmail, Date startTime, Date endTime) {
         Page<LogPo> page = PageHelper.startPage(pageNum, pageSize);
         logMapper.getAllLog(title,operatorEmail,startTime,endTime);
-        return PageInfo.<Log>builder().total(page.getTotal()).pageNum(pageNum).pageSize(pageSize)
-                .data(DozerUtils.mapList(page.getResult(),Log.class))
+        return PageInfo.<Log>builder().total(page.getTotal()).pageNum(page.getPageNum())
+                .pageSize(page.getPageSize()).data(DozerUtils.mapList(page.getResult(),Log.class))
                 .build();
     }
 }

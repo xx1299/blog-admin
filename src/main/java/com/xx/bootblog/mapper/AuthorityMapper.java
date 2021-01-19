@@ -3,9 +3,11 @@ package com.xx.bootblog.mapper;
 import com.xx.bootblog.domain.dto.Authority;
 import com.xx.bootblog.domain.po.AuthorityPo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface AuthorityMapper {
     List<AuthorityPo> getAuthoritiesByRoleIds(@Param("roleIds") List<Integer> roleIds);
 

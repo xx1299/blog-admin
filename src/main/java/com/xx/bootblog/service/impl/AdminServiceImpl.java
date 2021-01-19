@@ -99,7 +99,7 @@ public class AdminServiceImpl implements AdminService {
                 })
                 .collect(Collectors.toList());
         return PageInfo.<Admin>builder().data(admins).total(page.getTotal())
-                .pageNum(pageNum).pageSize(pageSize).build();
+                .pageNum(page.getPageNum()).pageSize(page.getPageSize()).build();
     }
 
     @Override

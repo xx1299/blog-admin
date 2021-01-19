@@ -3,10 +3,12 @@ package com.xx.bootblog.mapper;
 
 import com.xx.bootblog.domain.po.LogPo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
 
+@Repository
 public interface LogMapper {
 
     void insert(@Param("logPo") LogPo logPo);

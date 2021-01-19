@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xx.bootblog.mapper.ReviewMapper">
+
+    <sql id="articleColumn">
+        id, article_id, user_id, content, review_time,parent_review_id,brother_review_id
+    </sql>
+
+    <delete id="deleteByArticleId">
+        delete from review
+        where article_id = #{articleId}
+    </delete>
+</mapper>
