@@ -12,5 +12,7 @@ public interface LogService {
     void addLog(LogPo logPo);
 
     PageInfo<Log> getLogByPage(Integer pageSize, Integer pageNum, String title,
-                               String operatorEmail, Date startTime, Date endTime);
+                               String operatorEmail, String type, Date startTime, Date endTime);
+
+    void delLog(Integer id);
 }

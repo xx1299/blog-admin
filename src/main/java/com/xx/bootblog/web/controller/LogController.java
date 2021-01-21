@@ -6,10 +6,7 @@ import com.xx.bootblog.domain.dto.Log;
 import com.xx.bootblog.domain.dto.PageInfo;
 import com.xx.bootblog.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -31,8 +28,16 @@ public class LogController {
     public AjxsResponse<PageInfo<Log>> logs(Integer pageSize, Integer pageNum,
                                             @RequestParam(required = false) String title,
                                             @RequestParam(required = false) String operatorEmail,
+                                            @RequestParam(required = false) String type,
                                             @RequestParam(required = false) Date startTime,
                                             @RequestParam(required = false) Date endTime) {
-        return AjxsResponse.success(logService.getLogByPage(pageSize,pageNum,title,operatorEmail,startTime,endTime));
+        return AjxsResponse.success(logService.getLogByPage(pageSize,pageNum,title,operatorEmail,type,startTime,endTime));
+    }
+
+    @DeleteMapping("/logs/{id}")
+    @SysLog(title = "删除日志")
+    public AjxsResponse delLog(@PathVariable("id") Integer id){
+        logService.delLog(id);
+        return AjxsResponse.success();
     }
 }

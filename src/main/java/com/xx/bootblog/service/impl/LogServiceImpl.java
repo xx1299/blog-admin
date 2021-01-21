@@ -26,11 +26,16 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public PageInfo<Log> getLogByPage(Integer pageSize, Integer pageNum, String title,
-                                      String operatorEmail, Date startTime, Date endTime) {
+                                      String operatorEmail, String type, Date startTime, Date endTime) {
         Page<LogPo> page = PageHelper.startPage(pageNum, pageSize);
-        logMapper.getAllLog(title,operatorEmail,startTime,endTime);
+        logMapper.getAllLog(title,operatorEmail,type,startTime,endTime);
         return PageInfo.<Log>builder().total(page.getTotal()).pageNum(page.getPageNum())
                 .pageSize(page.getPageSize()).data(DozerUtils.mapList(page.getResult(),Log.class))
                 .build();
+    }
+
+    @Override
+    public void delLog(Integer id) {
+        logMapper.delete(id);
     }
 }

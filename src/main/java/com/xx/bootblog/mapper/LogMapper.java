@@ -13,5 +13,9 @@ public interface LogMapper {
 
     void insert(@Param("logPo") LogPo logPo);
 
-    List<LogPo> getAllLog(@Param("title") String title, @Param("operatorEmail") String operatorEmail, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
+    List<LogPo> getAllLog(@Param("title") String title, @Param("operatorEmail") String operatorEmail,
+                          @Param("type") String type, @Param("startTime") Date startTime,
+                          @Param("endTime") Date endTime);
+
+    void delete(Integer id);
 }

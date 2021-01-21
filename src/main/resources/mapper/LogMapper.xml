@@ -9,12 +9,19 @@
         values(#{logPo.ip},#{logPo.url},#{logPo.title},#{logPo.operatorEmail},#{logPo.method},
         #{logPo.createTime},#{logPo.params},#{logPo.error},#{logPo.type})
     </insert>
+    <delete id="delete">
+        delete from log
+        where id = #{id}
+    </delete>
     <select id="getAllLog" resultType="LogPo">
         select <include refid="logColumn"/>
         from log
         <where>
             <if test="title != null and title != ''">
                 and title like concat('%',#{title},'%')
+            </if>
+            <if test="type != null and type != ''">
+                and `type` like concat('%',#{type},'%')
             </if>
             <if test="operatorEmail != null and operatorEmail != ''">
                 and operator_email like concat('%',#{operatorEmail},'%')

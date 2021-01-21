@@ -9,22 +9,22 @@ import com.xx.bootblog.domain.dto.UserInfo;
 import com.xx.bootblog.domain.po.LogPo;
 import com.xx.bootblog.service.LogService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 
@@ -83,8 +83,13 @@ public class SystemLogAop {
             LogPo logPo = LogPo.builder()
                     .ip(userIp).operatorEmail(email).url(requestUri)
                     .method(method).params(requestArgs).title(title).createTime(new Date())
-                    .error(error).type(LogEnum.SYSTEM_LOG.getKey())
+                    .error(error)
                     .build();
+            if (StringUtils.isBlank(error)){
+                logPo.setType(LogEnum.NORMAL_LOG.getKey());
+            }else{
+                logPo.setType(LogEnum.ERROR_LOG.getKey());
+            }
             CompletableFuture.runAsync(() -> {
                 save(logPo);
             });

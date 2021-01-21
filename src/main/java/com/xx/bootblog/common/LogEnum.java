@@ -2,8 +2,8 @@ package com.xx.bootblog.common;
 
 public enum LogEnum {
 
-    SYSTEM_LOG("后台系统日志",1),
-    BLOG_LOG("博客日志",2),
+    ERROR_LOG("异常日志",0),
+    NORMAL_LOG("正常日志",1),
     ;
 
     private String type;
